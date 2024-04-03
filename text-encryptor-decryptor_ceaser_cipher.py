@@ -31,16 +31,42 @@ def decrypt(text, decryptkey):
     return result
 
 def encrypt_command():
-    text = input_text.get("1.0", "end-1c")
-    key = int(key_entry.get())
+    text = input_text.get("1.0", "end-1c").strip() # Remove trailing newline
+    key_str = key_entry.get().strip()
+    
+    if not text:
+        output_text.delete("1.0", "end")
+        output_text.insert("1.0", "Error: Please enter text to encrypt.")
+        return
+    
+    try:
+        key = int(key_str)
+    except ValueError:
+        output_text.delete("1.0", "end")
+        output_text.insert("1.0", "Error: Please enter a valid integer key.")
+        return
+    
     result = encrypt(text, key)
     output_text.delete("1.0", "end")
     output_text.insert("1.0", result)
 
 def decrypt_command():
-    text = input_text.get("1.0", "end-1c")
-    decryptkey = int(key_entry.get())
-    result = decrypt(text, decryptkey)
+    text = input_text.get("1.0", "end-1c").strip() # Remove trailing newline
+    key_str = key_entry.get().strip()
+    
+    if not text:
+        output_text.delete("1.0", "end")
+        output_text.insert("1.0", "Error: Please enter text to decrypt.")
+        return
+    
+    try:
+        key = int(key_str)
+    except ValueError:
+        output_text.delete("1.0", "end")
+        output_text.insert("1.0", "Error: Please enter a valid integer key.")
+        return
+    
+    result = decrypt(text, key)
     output_text.delete("1.0", "end")
     output_text.insert("1.0", result)
 
